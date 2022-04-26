@@ -2,7 +2,7 @@
 
 RevitAddin Example to work with [TemporaryGraphicsManager] a new feature of Revit Api 2022.
 
-[TemporaryGraphicsManager] enable the ability to show image on the view, a click event on the image could be apply.
+[TemporaryGraphicsManager] enables the ability to show the image on the view, a click event on the image could be created.
 
 [![Revit 2022](https://img.shields.io/badge/Revit-2022+-blue.svg)](../..)
 [![Visual Studio 2019](https://img.shields.io/badge/Visual%20Studio%202019-16.11.7+-blue)](../..)
