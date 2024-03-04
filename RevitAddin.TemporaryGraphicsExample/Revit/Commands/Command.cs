@@ -15,37 +15,46 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elementSet)
         {
             UIApplication uiapp = commandData.Application;
+
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document document = uidoc.Document;
+            View view = uidoc.ActiveView;
             Selection selection = uidoc.Selection;
 
             var clickHandle = new ClickHandler();
             clickHandle.AddServer();
 
-            using (var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document))
+            try
             {
-                temporaryGraphicsManager.Clear();
-                var point = selection.PickPoint();
-
-                var imageName = "image.bmp";
-                var random = Random.NextDouble();
-                if (random > 0.3)
+                using (var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document))
                 {
-                    imageName = "image16.bmp";
-                }
-                if (random > 0.8)
-                {
-                    imageName = "device_power_browser.bmp";
-                }
+                    //temporaryGraphicsManager.Clear();
+                    var point = selection.PickPoint();
 
-                var imagePath = Path.Combine(Location, imageName);
-                var data = new InCanvasControlData(imagePath, point);
-                var indexClick = temporaryGraphicsManager.AddControl(data, ElementId.InvalidElementId);
+                    var imageName = "image.bmp";
+                    var random = Random.NextDouble();
+                    if (random > 0.3)
+                    {
+                        imageName = "image16.bmp";
+                    }
+                    if (random > 0.8)
+                    {
+                        imageName = "device_power_browser.bmp";
+                    }
+
+                    imageName = "point.bmp";
+
+                    var imagePath = Path.Combine(Location, imageName);
+                    var data = new InCanvasControlData(imagePath, point);
+                    var indexClick = temporaryGraphicsManager.AddControl(data, ElementId.InvalidElementId);
+                }
             }
+            catch { }
 
             return Result.Succeeded;
         }
 
         public string Location => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     }
+
 }
