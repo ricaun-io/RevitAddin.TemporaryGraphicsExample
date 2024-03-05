@@ -42,7 +42,7 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
                         imageName = "device_power_browser.bmp";
                     }
 
-                    imageName = "point.bmp";
+                    //imageName = "point.bmp";
 
                     var imagePath = Path.Combine(Location, imageName);
                     var data = new InCanvasControlData(imagePath, point);
