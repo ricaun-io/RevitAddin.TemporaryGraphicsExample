@@ -3,7 +3,7 @@ using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 
-namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
+namespace RevitAddin.TemporaryGraphicsExample.Revit
 {
     public class ClickHandler : ITemporaryGraphicsHandler
     {
@@ -11,7 +11,8 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
         public ClickHandler() : this(Guid.NewGuid())
         {
         }
-        public ClickHandler(Guid serverId) {
+        public ClickHandler(Guid serverId)
+        {
             this.serverId = serverId;
         }
 
