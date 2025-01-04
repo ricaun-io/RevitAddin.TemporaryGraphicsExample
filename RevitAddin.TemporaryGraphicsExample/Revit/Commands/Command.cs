@@ -25,25 +25,14 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
             {
                 using (var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document))
                 {
-                    //temporaryGraphicsManager.Clear();
-                    var point = selection.PickPoint();
-
-                    var imageName = "image.bmp";
-                    var random = Random.NextDouble();
-                    if (random > 0.3)
+                    while (true)
                     {
-                        imageName = "image16.bmp";
-                    }
-                    if (random > 0.8)
-                    {
-                        imageName = "device_power_browser.bmp";
-                    }
+                        var point = selection.PickPoint();
 
-                    //imageName = "point.bmp";
-
-                    var imagePath = Path.Combine(Location, imageName);
-                    var data = new InCanvasControlData(imagePath, point);
-                    var indexClick = temporaryGraphicsManager.AddControl(data, ElementId.InvalidElementId);
+                        var imagePath = Images[Index++ % Images.Length];
+                        var data = new InCanvasControlData(imagePath, point);
+                        var indexClick = temporaryGraphicsManager.AddControl(data, ElementId.InvalidElementId);
+                    }
                 }
             }
             catch { }
@@ -51,7 +40,9 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
             return Result.Succeeded;
         }
 
+        public static int Index = 0;
         public string Location => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public string[] Images => Directory.GetFiles(Location, "*.bmp");
 
     }
 }
