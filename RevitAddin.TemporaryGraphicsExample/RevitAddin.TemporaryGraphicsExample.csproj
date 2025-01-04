@@ -63,7 +63,7 @@
 
   <PropertyGroup>
     <PackageId>RevitAddin.TemporaryGraphicsExample</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.1.0</Version>
     <ProjectGuid>{A3399E68-62E1-4C44-8313-FFBBD8A9272F}</ProjectGuid>
   </PropertyGroup>
 
@@ -76,8 +76,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Company>Company</Company>
-    <Authors>Authors</Authors>
+    <Company>ricaun</Company>
+    <Authors>Luiz Henrique Cassettari</Authors>
     <Description>Revit Add-In Description for $(PackageId).</Description>
     <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
   </PropertyGroup>

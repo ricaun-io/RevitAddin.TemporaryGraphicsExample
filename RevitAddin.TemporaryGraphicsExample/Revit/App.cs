@@ -1,5 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RevitAddin.TemporaryGraphicsExample.Revit.Commands;
 using ricaun.Revit.UI;
 using System;
 
@@ -9,6 +10,7 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit
     public class App : IExternalApplication
     {
         private static RibbonPanel ribbonPanel;
+        public ClickHandler clickHandle = new ClickHandler();
         public Result OnStartup(UIControlledApplication application)
         {
             ribbonPanel = application.CreatePanel("Graphics");
@@ -18,12 +20,17 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit
             ribbonPanel.CreatePushButton<Commands.CommandClear>("Clear")
                 .SetLargeImage("/UIFrameworkRes;component/ribbon/images/revit.ico");
 
+            clickHandle.AddServer();
+
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
             ribbonPanel?.Remove();
+
+            clickHandle.RemoveServer();
+
             return Result.Succeeded;
         }
     }

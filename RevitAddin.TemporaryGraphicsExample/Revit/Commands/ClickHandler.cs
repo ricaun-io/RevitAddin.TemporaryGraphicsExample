@@ -5,18 +5,42 @@ using System.Collections.Generic;
 
 namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
 {
-    class ClickHandler : ITemporaryGraphicsHandler
+    public class ClickHandler : ITemporaryGraphicsHandler
     {
+        private Guid serverId;
+        public ClickHandler() : this(Guid.NewGuid())
+        {
+        }
+        public ClickHandler(Guid serverId) {
+            this.serverId = serverId;
+        }
+
         public void AddServer()
         {
             Guid guid = GetServerId();
             var services = (MultiServerService)ExternalServiceRegistry.GetService(GetServiceId());
 
             if (services.IsRegisteredServerId(guid))
-                services.RemoveServer(guid);
+                return;
 
             services.AddServer(this);
-            services.SetActiveServers(new List<Guid> { guid });
+            var activeServerIds = services.GetActiveServerIds();
+            activeServerIds.Add(guid);
+            services.SetActiveServers(activeServerIds);
+        }
+
+        public void RemoveServer()
+        {
+            Guid guid = GetServerId();
+            var services = (MultiServerService)ExternalServiceRegistry.GetService(GetServiceId());
+
+            if (services.IsRegisteredServerId(guid))
+            {
+                var activeServerIds = services.GetActiveServerIds();
+                activeServerIds.Remove(guid);
+                services.SetActiveServers(activeServerIds);
+                services.RemoveServer(guid);
+            }
         }
 
         public string GetDescription()
@@ -31,7 +55,7 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
 
         public Guid GetServerId()
         {
-            return new Guid("7B469077-9F7C-4CCF-9746-BD0DE41D3610");
+            return serverId;
         }
 
         public ExternalServiceId GetServiceId()
@@ -46,7 +70,7 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
 
         public void OnClick(TemporaryGraphicsCommandData data)
         {
-            System.Windows.MessageBox.Show($"TemporaryGraphics {data.Index}");
+            System.Windows.MessageBox.Show($"TemporaryGraphics {data.Index} {data.Document.Application.ActiveAddInId?.GetAddInName()}");
         }
     }
 }

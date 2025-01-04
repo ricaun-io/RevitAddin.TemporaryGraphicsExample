@@ -21,9 +21,6 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit.Commands
             View view = uidoc.ActiveView;
             Selection selection = uidoc.Selection;
 
-            var clickHandle = new ClickHandler();
-            clickHandle.AddServer();
-
             try
             {
                 using (var temporaryGraphicsManager = TemporaryGraphicsManager.GetTemporaryGraphicsManager(document))
