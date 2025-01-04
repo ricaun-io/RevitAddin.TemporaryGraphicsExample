@@ -13,6 +13,10 @@ namespace RevitAddin.TemporaryGraphicsExample.Revit
         public Result OnStartup(UIControlledApplication application)
         {
             ribbonPanel = application.CreatePanel("Graphics");
+
+            ribbonPanel.CreatePushButton<Commands.CommandFrames>("Frames")
+                .SetLargeImage("/UIFrameworkRes;component/ribbon/images/revit.ico");
+
             ribbonPanel.CreatePushButton<Commands.Command>("Temporary")
                 .SetLargeImage("/UIFrameworkRes;component/ribbon/images/revit.ico");
 
